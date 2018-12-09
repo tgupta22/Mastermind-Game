@@ -1,0 +1,300 @@
+#include <iostream>
+#include <cstdlib> // Required for random
+#include <iomanip> // Required for setw function
+using namespace std;
+
+
+//-------------------------------------------------------------------
+
+int main()
+{
+  
+ // *** Lin: Too many blank lines here 
+ //*** Lin: You should write functions to avoid repetitive code
+  char userInput;
+  int numVal;
+  int userInput1;
+  int userNum1; 
+  int userNum2;
+  int userNum3;
+  int guessInput1;
+  int guessInput2;
+  int guessInput3;
+  int secretDigit;
+  int numVal1;
+  int numVal2;
+  int numVal3;
+  int inPlace = 0;
+  int outofPlace = 0;
+  
+  int i = 1;
+ 
+  // ID Information Display
+  /* This is the basic display structure of the game mastermind in which user has to guess a three 
+       mumber in this case (367) which is being stored.
+       As the user is guessing he/she can se how may digits out of three are inplace and outofplace. */
+    
+ // Below I am printing out all the information required for the better understanding of the game to the user.
+    
+
+
+ cout << "Program: 2 MasterMind" << endl;
+ cout << "The program selects 3 distinct random digits 0..9." << endl;
+ cout << "On each turn you guess 3 digits.  The program indicates" << endl;
+ cout << "how many are correct. You have 10 moves to guess the number." << endl;
+ cout << "Good luck!" << endl;
+ cout << endl;
+ cout << "Press 's' to set the three digits, or 'r' to randomize them:" << endl;
+
+ // cout << "Input of 000 displays the hidden digits.  Input of 999 exits the program." << endl;
+ 
+ // Here I am calling for a user input which would be either r or s.
+ cin >> userInput;
+  
+   
+ // In my program I am considering two cases, Case #1 - When user puts in an input as r 
+ // Case #2 - Would be when a user puts in a input as s.
+  
+if (userInput == 's')
+   {
+    cout << "Enter three distinct digits each in the range 0..9 (e.g. 354): " << endl;
+    cin >> numVal;
+    cout << endl << endl;
+    cout << "Input of 000 displays the hidden digits.  Input of 999 exits the program." << endl;
+    cout << endl;
+
+    numVal1 = numVal / 100;
+    numVal2 = (numVal / 10) % 10;
+    numVal3 = numVal % 10; 
+
+
+    cout << endl;
+    cout << setw(36) << "In place" << setw(14) << "Out of place"  << endl;
+    cout << setw(36) << "--------" << setw(14) << "------------" << endl;
+
+
+
+
+    for ( i = 1; i < 11; i++ )
+    {
+     cout << i << "."<< "Your guess:" << endl;
+     cin >> userInput1;
+
+    userNum1 = userInput1 / 100;
+    userNum2 = (userInput1 / 10) % 10;
+    userNum3 = userInput1 % 10;
+
+    int inPlace = 0;
+    int outofPlace = 0;
+
+
+     if (userNum1 == 0 && userNum2 == 0 && userNum3 == 0 ) 
+         {
+
+          cout << " hidden digits are: " << guessInput1 << guessInput2 << guessInput3 << endl;
+          i = i -1;
+          continue;
+         } // Continue will disregard the code below, break completely out of the code.
+
+
+
+    else if ( userNum1 == 9 && userNum2 == 9 && userNum3 == 9) 
+           {
+            cout << "   Exiting loop..." << endl;
+          
+            break;
+
+           }
+
+
+    
+    // Below are my if and if-else condition for the user to know when he/she guess a digit in place or out of place.
+   // inPlace++ and outofPlace increments by 1 if a digit respectively.
+
+             if (userNum1 == numVal1) 
+             {
+                inPlace++;
+             }
+
+             if (userNum1 == numVal2) 
+             {
+
+                outofPlace++;
+
+             }
+
+             if (userNum1 == numVal3)
+             {
+               outofPlace++;
+             }
+
+             if (userNum2 == numVal2)
+             {
+                inPlace++;
+             }
+
+             if (userNum2 == numVal1 )
+             {
+                outofPlace++;
+             }
+
+              if (userNum2 == numVal3)
+             {
+               outofPlace++;
+             }
+
+            if (userNum3 == numVal3)
+             {
+                 inPlace++;
+             }
+
+              if (userNum3 == numVal1) 
+             {
+                outofPlace++;
+             }
+    
+             if (userNum3 == numVal2)
+            {
+              outofPlace++;
+            }
+
+
+        cout << "          You entered: " << userNum1 << userNum2 << userNum3 << "      " << inPlace << "      " << outofPlace << endl;
+
+
+  // In the the condition below if the user gusses the digits correctly, a message as *** Congratulations! *** is displayed and the game ends.
+     if (guessInput1 == userNum1 && guessInput2 == userNum2 && guessInput3 == userNum3) {
+       cout << endl;
+       cout << "*** Congratulations! ***";
+       cout << endl;
+       cout << endl;
+       cout << "Exiting program...";
+       break; // I am using a break statement here as after executing it  the loop is immediately terminated 
+     }
+
+
+
+   }
+  // I have this condtion outside the for loop, as I first need to check all the other conditions and if the user fails in guessing the number, then condition below. displays.
+    cout << endl;
+    cout << "   Better luck next time." << endl;
+    cout << endl;
+    cout << "Exiting program...";
+}
+  if (userInput == 'r')
+{   // I am using r to randomize the three digits and below is the required condition.
+
+guessInput1 = rand() % 10;
+guessInput2 = rand() % 10;
+guessInput3 = rand() % 10;
+          
+cout << endl;
+cout << "Input of 000 displays the hidden digits.  Input of 999 exits the program." << endl;
+cout << endl;
+cout << endl;
+cout << setw(36) << "In place" << setw(14) << "Out of place"  << endl;
+cout << setw(36) << "--------" << setw(14) << "------------" << endl;
+
+// Using a for loop as I will be using mutiple if and if-else statment to satisfy inplace and outofplace conditions. 
+for ( i = 1; i < 11; i++ ) // These conditions of the for loop would allow user 10 chances to guess the secret digits.
+{
+ cout << i << "."<< "Your guess:" << endl;
+ cin >> userInput1;
+
+// I am defining these two int functions equals to zero, because they will display how many digits are in correct place
+// or are out of place.
+
+ inPlace = 0;
+ outofPlace = 0;
+
+// The condition below helps us to generate the secret digits. 
+ userNum1 = userInput1 / 100;
+ userNum2 = (userInput1 / 10) % 10;
+ userNum3 = userInput1 % 10;
+
+// In this if statemnet I am using the condtion if userinputs 000, then it shows the hidden digits.
+if (userNum1 == 0 && userNum2 == 0 && userNum3 == 0 ) 
+   {
+
+    //inplace++;
+    cout << " hidden digits are: " << guessInput1 << guessInput2 << guessInput3 << endl;
+    i = i -1;
+    continue; // I am using continue here as after its execution control directly jumps to the beginning of the loop for next iteration
+   }
+
+
+ // If a userinputs 999 it exits the game.
+else if ( userNum1 == 9 && userNum2 == 9 && userNum3 == 9) 
+     {
+      cout << "   Exiting loop..." << endl;
+      cout << endl;
+      cout << "   Better luck next time." << endl;
+      cout << endl;
+      cout << "Exiting program...";
+      return 0; // I am using a return statement as it stops execution and returns to the function.
+
+     }
+
+
+   // Below are my if and if-else condition for the user to know when he/she guess a digit in place or out of place.
+   // inPlace++ and outofPlace increments by 1 if a digit respectively.
+   
+   if (userNum1 == guessInput1) 
+         {
+            inPlace++; 
+         }
+
+ else if (userNum2 == guessInput1 || userNum3 == guessInput1)
+         {
+
+            outofPlace++;
+
+         }
+
+       if (userNum2 == guessInput2)
+         {
+            inPlace++;
+         }
+
+         else if (userNum3 == guessInput2 || userNum1 == guessInput2)
+         {
+            outofPlace++;
+         }
+
+        if (userNum3 == guessInput3)
+         {
+             inPlace++;
+         }
+
+         else if (userNum1 == guessInput3 || userNum2 == guessInput3);
+         {
+           //  OutOfPlace++;
+         }
+
+    cout << "          You entered: " << userNum1 << userNum2 << userNum3 << "      " << inPlace << "      " << outofPlace << endl;
+
+
+ if (guessInput1 == userNum1 && guessInput2 == userNum2 && guessInput3 == userNum3) {
+
+   inPlace++;
+   inPlace++;
+   inPlace++;
+
+// In the the condition below if the user gusses the digits correctly, a message as *** Congratulations! *** is displayed and the game ends.
+   cout << endl;
+   cout << "*** Congratulations! ***";
+   cout << endl;
+   cout << endl;
+   cout << "Exiting program...";
+
+   break; // I am using a break statement here as after executing it  the loop is immediately terminated and program control resumes at the next statement following the loop.
+ }
+}
+ 
+   
+}
+    
+      return 0;
+
+}
+
